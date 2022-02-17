@@ -1,1 +1,2 @@
 # didactic-lamp
+Wordle bot
