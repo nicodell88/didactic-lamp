@@ -3,6 +3,9 @@ import random
 from myBot import utils
 from pathlib import Path
 
+import plotly.graph_objects as go
+
+
 data_folder = Path("data/nytimes_all")
 # data_folder = Path("data/nytimes_answers")
 # data_folder = Path("data/sbg-words")
@@ -59,8 +62,8 @@ class Game:
 	
 
 def sim_game():
-	wordle_answers = ["tacit"]
-	# wordle_answers = ["swill","dodge","shake","caulk","aroma","cynic","robin","ultra","ulcer","pause","humor","frame","elder","skill","aloft","pleat","shard","moist","those","light","wrung","could","perky","mount","whack"]
+	wordle_answers = ["cigar", "rebut", "sissy", "humph", "awake", "blush", "focal", "evade", "naval", "serve", "heath", "dwarf", "model", "karma", "stink", "grade", "quiet", "bench", "abate", "feign", "major", "death", "fresh", "crust", "stool", "colon", "abase", "marry", "react", "batty", "pride", "floss", "helix", "croak", "staff", "paper", "unfed", "whelp", "trawl", "outdo", "adobe", "crazy", "sower", "repay", "digit", "crate", "cluck", "spike", "mimic", "pound", "maxim", "linen", "unmet", "flesh", "booby", "forth", "first", "stand", "belly", "ivory", "seedy", "print", "yearn", "drain", "bribe", "stout", "panel", "crass", "flume", "offal", "agree", "error", "swirl", "argue", "bleed", "delta", "flick", "totem", "wooer", "front", "shrub", "parry", "biome", "lapel", "start", "greet", "goner", "golem", "lusty", "loopy", "round", "audit", "lying", "gamma", "labor", "islet", "civic", "forge", "corny", "moult", "basic", "salad", "agate", "spicy", "spray", "essay", "fjord", "spend", "kebab", "guild", "aback", "motor", "alone", "hatch", "hyper", "thumb", "dowry", "ought", "belch", "dutch", "pilot", "tweed", "comet", "jaunt", "enema", "steed", "abyss", "growl", "fling", "dozen", "boozy", "erode", "world", "gouge", "click", "briar", "great", "altar", "pulpy", "blurt", "coast", "duchy", "groin", "fixer", "group", "rogue", "badly", "smart", "pithy", "gaudy", "chill", "heron", "vodka", "finer", "surer", "radio", "rouge", "perch", "retch", "wrote", "clock", "tilde", "store", "prove", "bring", "solve", "cheat", "grime", "exult", "usher", "epoch", "triad", "break", "rhino", "viral", "conic", "masse", "sonic", "vital", "trace", "using", "peach", "champ", "baton", "brake", "pluck", "craze", "gripe", "weary", "picky", "acute", "ferry", "aside", "tapir", "troll", "unify", "rebus", "boost", "truss", "siege", "tiger", "banal", "slump", "crank", "gorge", "query", "drink", "favor", "abbey", "tangy", "panic", "solar", "shire", "proxy", "point", "robot", "prick", "wince", "crimp", "knoll", "sugar", "whack", "mount", "perky", "could", "wrung", "light", "those", "moist", "shard", "pleat", "aloft", "skill", "elder", "frame", "humor", "pause", "ulcer", "ultra", "robin", "cynic", "aroma", "caulk", "shake", "dodge", "swill"]
+	score = []
 	for soln in wordle_answers:
 		print(f"\nNewGame\nAnswer = {soln}")
 		game = Game(answer=soln)
@@ -69,7 +72,7 @@ def sim_game():
 		wordsleft = []
 		while game.still_playing:
 			if len(guesses) == 0:
-					guess = "bears"
+					guess = "tares"
 			elif len(game.word_list) >1:
 				entropy_list = game.entropy_list()
 				
@@ -94,10 +97,16 @@ def sim_game():
 		print(f"            GUESS  WORDS REMAINING")
 		for i in range(len(guesses)):
 			print(f"{patterns[i]}  {guesses[i]}  {wordsleft[i]}")
+		score.append(len(guesses))
+
+	return score
 
 
 
 if __name__ == "__main__":
 	
-	sim_game()
+	score = sim_game()
+
+	fig = go.Figure(data=[go.Histogram(x=score)])
+	fig.show()
 
