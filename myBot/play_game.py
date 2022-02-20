@@ -18,10 +18,10 @@ class AssistHuman:
 					break
 			
 			print("What word would you like to guess?")
-			guess = input()
+			guess = input(">>>")
 			print(f"You've guessed {guess}")
-			print("what was the wordle response?")
-			response = input()
+			print("What was the wordle response?")
+			response = input(">>>")
 			t = [int(r) for r in response]
 			dec = utils.ternary2decimal(t)
 			pat = utils.decimal2pattern(dec)
