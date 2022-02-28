@@ -9,12 +9,13 @@ class AssistHuman:
 	
 	def play(self):
 		print("Let's Play!")
-		while len(self.game.word_list)>1:
-			sorted_pairs = sorted(zip(self.game.word_list,self.game.entropy_list()), key=operator.itemgetter(1),reverse=True)
-			print("Word   Entropy")
+		k = 0
+		while len(self.game.answer_list)>1:
+			sorted_pairs = sorted(zip(self.game.guess_list,self.game.entropy_list()), key=operator.itemgetter(1),reverse=True)
+			print("Word   Entropy  Valid")
 			for i,pair in enumerate(sorted_pairs):
-				print(f"{pair[0]} {pair[1]}")
-				if i>=10:
+				print(f"{pair[0]} {pair[1]} {pair[0] in self.game.answer_list}")
+				if i>=100:
 					break
 			
 			print("What word would you like to guess?")
@@ -26,13 +27,16 @@ class AssistHuman:
 			dec = utils.ternary2decimal(t)
 			pat = utils.decimal2pattern(dec)
 			print(f"Wordle responded with {pat}")
-			self.game.cull(guess,dec)
 
-			if self.game.N ==1 and self.game.word_list[0] == guess:
+			cull_guess = k>0
+			k+=1
+			self.game.cull(guess,dec,cull_guess=True)
+
+			if self.game.N ==1 and self.game.answer_list[0] == guess:
 				print("Congratulations!")
 				break
 			elif self.game.N ==1:
-				print(f"There is only 1 possible remaining answer: {self.game.word_list[0]}")
+				print(f"There is only 1 possible remaining answer: {self.game.answer_list[0]}")
 			else:
 				print(f"There are {self.game.N} possible answers remaining.")
 

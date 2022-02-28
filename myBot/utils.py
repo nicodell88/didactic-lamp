@@ -58,14 +58,15 @@ def calculate_pattern(guess, answer):
 	return encoding,''.join(pattern)
 
 def calculate_entropy(lu):
-	N=lu.shape[0]
+	n_guess=lu.shape[0]
+	n_answer=lu.shape[1]
 	entropy_list = []
-	for i in range(N):
+	for i in range(n_guess):
 		frequency = collections.Counter(lu[i,:])
 		entropy = 0
 
 		for pat,cnt in frequency.items():
-			p = cnt/N
+			p = cnt/n_answer
 			# entropy -= p(x)log2(p(x))
 			entropy += p*np.log2(1/p)
 		# print(entropy)
